@@ -1,0 +1,97 @@
+:root{
+    --bg: #ffffff;
+    --fg: #222;
+    --accent: #3b82f6;
+    --panel-bg: rgba(255,255,255,0.85);
+}
+
+/* Reset / base */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; }
+body { display:flex; flex-direction:column; }
+main { flex: 1; min-height: 100vh; display:flex; align-items:center; justify-content:center; padding:0; }
+.hidden { display: none; }
+
+/* Layout panels */
+.panel { width:100%; max-width:1000px; margin:0; padding:24px; border-radius:12px; background: var(--panel-bg); box-shadow: 0 10px 30px rgba(0,0,0,0.08); position:relative; }
+#top, #result { display:flex; align-items:center; justify-content:center; padding:32px; }
+#top .panel, #result .panel { max-width:920px; }
+
+/* Header / title */
+h1 { margin:0 0 12px; font-size:32px; text-align:center; }
+.title-left, .title-right { display:inline-block; }
+@media (max-width:820px){
+    .title-left, .title-right { display:block; width:100%; }
+    .title-left { margin-bottom:6px; }
+}
+
+/* Controls */
+.controls { display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; align-items:center; }
+.controls.small { margin-top:18px; }
+label { font-size:14px; display:flex; flex-direction:column; }
+input[type="text"], input[type="number"], textarea { padding:10px; border:1px solid #ddd; border-radius:8px; font-size:16px; }
+
+/* Range pair: keep start/end together */
+.range-pair { display:flex; gap:12px; flex-wrap:nowrap; align-items:center; }
+.range-pair label { white-space:nowrap; display:flex; flex-direction:column; }
+@media (max-width:640px){
+    .range-pair { flex-direction:column; align-items:stretch; }
+    .range-pair label { white-space:normal; }
+}
+
+/* Actions (buttons) */
+.actions { margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:nowrap; align-items:center; }
+.actions .primary, button.primary { background:var(--accent); color:#fff; border:0; padding:12px 16px; border-radius:10px; cursor:pointer; }
+button { padding:10px 14px; border-radius:10px; border:1px solid #ccc; background:#fff; cursor:pointer; white-space:nowrap; flex:0 0 auto; }
+button.muted { background:#f5f5f5; }
+
+/* Hint icon + tooltip (panel top-right) */
+.hint-wrap { position:absolute; top:12px; right:12px; display:inline-block; }
+.hint-icon { width:34px; height:34px; border-radius:50%; border:1px solid #ccc; background:#fff; color:var(--fg); font-weight:700; cursor:help; display:inline-flex; align-items:center; justify-content:center; }
+.hint-text { position:absolute; right:0; top:calc(100% + 8px); white-space:normal; max-width:420px; min-width:240px; padding:12px 14px; border-radius:8px; background:rgba(0,0,0,0.88); color:#fff; font-size:14px; line-height:1.5; opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease; transform:translateY(6px); text-align:left; }
+.hint-wrap:hover .hint-text, .hint-wrap:focus-within .hint-text { opacity:1; transform:translateY(0); }
+.hint-text::after { content:''; position:absolute; right:12px; top:-6px; border-width:0 6px 6px 6px; border-style:solid; border-color:transparent transparent rgba(0,0,0,0.8) transparent; }
+@media (max-width:480px){
+    .hint-text { max-width:260px; font-size:12px; min-width:160px; }
+    .hint-icon { width:30px; height:30px; }
+    .hint-wrap { top:8px; right:8px; }
+}
+
+/* Play area (full-viewport background) */
+#play { padding:0; }
+.play-area { position:fixed; inset:0; height:100vh; width:100vw; border-radius:0; overflow:hidden; }
+.play-area .overlay { position:absolute; left:0; right:0; bottom:0; top:0; display:flex; align-items:center; justify-content:center; padding:20px; }
+.play-card { background:var(--panel-bg); padding:18px; border-radius:12px; max-width:720px; width:100%; box-shadow:0 8px 24px rgba(0,0,0,0.12); display:flex; flex-direction:column; gap:12px; }
+.play-card textarea { width:360px; min-height:44px; height:44px; max-width:80vw; resize:none; font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size:15px; padding:8px; border-radius:8px; }
+.play-actions { display:flex; gap:8px; justify-content:flex-end; }
+@media (max-width:720px){ .play-card textarea { width:100%; height:48px; } }
+
+/* Result styles */
+.result-msg { font-size:18px; padding:12px; text-align:center; }
+.result-status { font-size:28px; font-weight:700; margin:6px 0; color:var(--fg); }
+.result-status.correct { color:#137f2e; }
+.result-status.incorrect { color:#b91c1c; }
+.result-detail { font-size:16px; margin:8px 0; color:var(--fg); }
+.result-colors { display:flex; gap:18px; justify-content:center; align-items:center; margin-top:8px; flex-wrap:wrap; }
+.result-color { display:flex; gap:10px; align-items:center; }
+.color-swatch { width:44px; height:44px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); box-shadow: inset 0 0 0 2px rgba(255,255,255,0.06); }
+.color-label { font-size:14px; }
+
+/* Ensure the result panel leaves room for fixed buttons */
+#result { padding-bottom:84px; }
+@media (max-width:420px){ .result-colors { flex-direction:column; } #result { padding-bottom:110px; } }
+
+/* Footer */
+footer { font-size:13px; text-align:right; padding:8px 12px; position:fixed; right:12px; bottom:12px; background:rgba(255,255,255,0.75); color:var(--fg); border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+
+/* Ensure .hidden works even if IDs have display rules */
+#top.hidden, #play.hidden, #result.hidden { display:none; }
+
+/* Result action buttons container (bottom-right) */
+#result .actions { position:absolute; right:18px; bottom:18px; z-index:1200; display:flex; gap:8px; align-items:center; flex-wrap:nowrap; }
+@media (max-width:480px){ #result .actions { right:12px; bottom:12px; flex-direction:column-reverse; gap:6px; } }
+
+/* Minor responsive adjustments */
+@media (max-width:900px){ h1{ font-size:24px; } .controls{ flex-direction:column; align-items:stretch; } .play-card{ padding:14px; } }
+@media (max-width:420px){ input[type="text"], input[type="number"], textarea { font-size:14px; padding:8px; } .actions .primary, button.primary { padding:10px; } }
+

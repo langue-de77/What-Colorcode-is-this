@@ -1,29 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<style>
-		
-		.author_container {
-			border: 1px solid black;
-			background-color: #008080;
-			margin: 0 0 20px;
-			border-radius: 20px;
-		}
-    </style>
-<meta charset="UTF-8" />
-<title>What ColorCode is this?</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>What ColorCode is this?</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="content">
-        <div class="color"></div>
-    </div>
-	
+	<main id="app">
+		<!-- トップ画面 -->
+		<section id="top" class="panel">
+			<h1><span class="title-left">What ColorCode</span> <span class="title-right">is this?</span></h1>
+			<div class="controls">
+				<label>許容誤差
+					<input id="threshold" type="number" min="0" max="765" value="100">
+				</label>
+				<div class="range-pair">
+					<label>出題範囲：開始
+						<input id="rangeStart" type="text" placeholder="#000000" value="#000000">
+					</label>
+					<label>出題範囲：終了
+						<input id="rangeEnd" type="text" placeholder="#ffffff" value="#ffffff">
+					</label>
+				</div>
+			</div>
+			<div class="actions">
+				<button id="startBtn" class="primary">開始</button>
+			</div>
+			<div class="hint-wrap">
+				<button class="hint-icon" aria-label="ヒント" title="説明">?</button>
+				<div class="hint-text" role="tooltip">出題範囲を指定すると、その範囲内の色がランダムに選ばれます。</div>
+			</div>
+		</section>
 
+		<!-- プレイ画面 -->
+		<section id="play" class="panel hidden">
+			<div id="playArea" class="play-area">
+				<div class="overlay">
+					<div class="play-card">
+						<h2>色を推測してください</h2>
+						<textarea id="answer" placeholder="#rrggbb を入力"></textarea>
+						<div class="play-actions">
+							<button id="submitBtn">解答</button>
+							<button id="giveupBtn" class="muted">トップに戻る</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 結果画面 -->
+		<section id="result" class="panel hidden">
+			<div id="resultMsg" class="result-msg"></div>
+			<div class="actions">
+				<button id="againBtn">もう一度</button>
+				<button id="backTopBtn" class="muted">戻る</button>
+			</div>
+			<div class="controls small">
+				<label>許容誤差
+					<input id="thresholdResult" type="number" min="0" max="765" value="100">
+				</label>
+				<div class="range-pair">
+					<label>範囲開始
+						<input id="rangeStartResult" type="text" placeholder="#000000" value="#000000">
+					</label>
+					<label>範囲終了
+						<input id="rangeEndResult" type="text" placeholder="#ffffff" value="#ffffff">
+					</label>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; 2026 blackbear</p>
+	</footer>
+
+	<script src="main.js"></script>
 </body>
-
-<footer>
-	<p>&copy; 2025 blackbear</p>
-</footer>
 
 </html>
